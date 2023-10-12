@@ -11,8 +11,10 @@ function App() {
     <div id="page-top">
       <Nav></Nav>
       <Routes>
+        <Route path="/*" Component={Home} />
         <Route path="/Home" Component={Home} />
         <Route path="/TripsList" Component={TripsList} />
+        <Route path="/TripsList/:tripDifficulty" Component={TripsList} />
         <Route path="/TripDetail/:tripSlug" Component={TripDetail} />
         <Route path="/TripItem" Component={TripItem} />
       </Routes>

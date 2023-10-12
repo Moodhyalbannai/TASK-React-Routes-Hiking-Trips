@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Nav() {
   return (
@@ -8,9 +9,9 @@ function Nav() {
       id="mainNav"
     >
       <div className="container">
-        <NavLink to="/Home" className="navbar-brand">
+        <Link to="/Home" className="navbar-brand">
           Hike
-        </NavLink>
+        </Link>
 
         <div className="collapse navbar-collapse" id="navbarResponsive">
           <ul className="navbar-nav ms-auto">

@@ -2,12 +2,22 @@ import React, { useState } from "react";
 import tripsData from "../tripsData";
 import SearchBar from "./SearchBar";
 import TripItem from "./TripItem";
+import { NavLink, useParams } from "react-router-dom";
 
 function TripsList() {
+  const { tripDifficulty } = useParams([]);
   const [query, setQuery] = useState("");
-  const trips = tripsData
+
+  const filteredTrips = tripsData
     .filter((trip) => trip.name.toLowerCase().includes(query.toLowerCase()))
+    .filter((trip) => {
+      if (tripDifficulty) {
+        return trip.difficulty === tripDifficulty;
+      }
+      return true;
+    })
     .map((trip, index) => <TripItem trip={trip} key={index} />);
+
   return (
     <section className="page-section portfolio" id="portfolio">
       <div className="container">
@@ -17,9 +27,23 @@ function TripsList() {
         <br />
         <SearchBar setQuery={setQuery} />
         <center>
-          <button className="btn btn-primary btn-xl">Easy</button>
-          <button className="btn btn-primary btn-xl">Moderate</button>
-          <button className="btn btn-primary btn-xl">Hard</button>
+          <NavLink to={`/TripsList`}>
+            <button
+              className="btn btn-primary btn-xl"
+              onClick={() => setQuery("")}
+            >
+              All
+            </button>
+          </NavLink>
+          <NavLink to={`/TripsList/easy`}>
+            <button className="btn btn-primary btn-xl">Easy</button>
+          </NavLink>
+          <NavLink to={`/TripsList/moderate`}>
+            <button className="btn btn-primary btn-xl">Moderate</button>
+          </NavLink>
+          <NavLink to={`/TripsList/hard`}>
+            <button className="btn btn-primary btn-xl">Hard</button>
+          </NavLink>
         </center>
         <div className="divider-custom">
           <div className="divider-custom-line"></div>
@@ -29,7 +53,7 @@ function TripsList() {
           <div className="divider-custom-line"></div>
         </div>
 
-        <div className="row justify-content-center">{trips}</div>
+        <div className="row justify-content-center">{filteredTrips}</div>
       </div>
     </section>
   );
